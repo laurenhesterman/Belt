@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coding Dojos</title>
+    <style>
+    body {
+        padding: 2em;
+        
+        background-attachment: fixed; !important; 
+    }
+    h1 {
+        margin-bottom: 1em;
+    }
+    .extra {
+        margin-top: .6em;
+        margin-bottom: .6em;
+    }
+    h3 {
+        padding-top: .4em;
+        padding-bottom: .4em;
+    }
+    .extra {
+        padding: 1em;
+    }
+    .together {
+        display: inline-block;
+        margin-right: .9em;
+    }
+    .width {
+        width: 20 %
+
+    }
+    
+    
+    </style>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+</head>
+<body >
+<div>
+<h1 class="text-info" >Welcome, <%= current_user.first_name %>!</h1>
+
+<form action="/sessions/<%=current_user.id%>" method="post" class="together">
+<input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+<input type="hidden" name="_method" value="delete">
+<input type="submit" value="Log Out" >
+</form>
+
+<h3 class="text-info">Add a Song</h3>
+    <form action="/songs/create" method="post">
+    <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+
+   
+        <label for="title">Song Title:</label>
+        <input type="text" id="title" name=song[title] class="w-50 p-3 width" placeholder="Write Song Title Here "><br>
+        <label for="artist">Artist:</label>
+        <input type="text" id="artist" name=song[artist] class="w-50 p-3 width" placeholder="Write Artist Here "><br>
+        <input type="submit" class="extra" value="Add Song">
+    
+
+    </form>
+<% if flash[:errors] %>
+<% flash[:errors].each do |e| %>
+    <p><%= e %></p>
+<% end %>
+<% end %>
+<h3 class="text-info">Listing <%= pluralize(@songs.count, "Song") %> in our Hub</h3>
+<table class="table table-striped">
+<thead class="thead-dark">
+<tr>
+    <th scope="col">Artist</th>
+    <th scope="col">Title</th>    
+    <th scope="col">Number of adds</th>   
+    <th scope="col">Add to Your Playlist</th>                           
+</tr>
+
+</thead>
+<tbody>
+
+<% @songs.each do |song| %>
+    
+    <tr>
+    <td><%= song.artist %> </td>
+    <td>
+        <a href="/songs/<%= song.id %>" ><%= song.title %></a> 
+    </td>  
+    <td>
+    
+    </td> 
+    <td>
+        <form action="/playlists/<%=song.id%>" method="post" class="together">
+        <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+        <input type="submit" value="Add to Playlist" >
+        </form>
+
+    </td>
+    </tr>
+    
+<% end %>
+</tbody>
+
+</table>
+
+
+
+
+
+
+</body>
+</html>
