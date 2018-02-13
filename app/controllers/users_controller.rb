@@ -12,15 +12,15 @@ class UsersController < ApplicationController
       end
   end
   def show
-     @songs = Song.all.order(created_at: :desc)
+     @songs = Song.all.order(created_at: :desc).uniq
   end
   def list
     @thisuser = User.find(params[:id])
-    @thesesongs = Playlist.where("user_id = ?", params[:id])
+    @thesesongs = Playlist.where("user_id = ?", params[:id]).uniq
   end
   def songs
     @thissong = Song.find(params[:id])
-    @theseusers = Playlist.where("song_id = ?", params[:id])
+    @theseusers = Playlist.where("song_id = ?", params[:id]).uniq
   end
   def update
       @thisuser = User.find(params[:id])

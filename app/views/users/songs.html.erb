@@ -46,7 +46,7 @@
 <thead class="thead-dark">
 <tr>
     <th scope="col">Name</th>
-    <th scope="col">Times Added</th>    
+    <th scope="col">Total songs added </th>    
                              
 </tr>
 
@@ -62,7 +62,7 @@
         <a href="/users/<%= playlist.user.id %>"> <%= playlist.user.first_name %> <%= playlist.user.last_name %></a>
     </td> 
     <td>
-    
+    <%= Playlist.all.where("user_id = ?", playlist.user.id).count %>
     </td> 
    
     </tr>

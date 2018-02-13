@@ -59,7 +59,7 @@
  <tr>
     <td> <%= playlist.song.title %> </td>
     <td> <%= playlist.song.artist %> </td>
-
+    <td> <%= Playlist.all.where("song_id = ?", playlist.song.id).count %> </td>
 
 
  </tr>
